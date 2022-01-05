@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "7331871091",
+    "project_id": "arthurvanremoortel-werkstuk",
+    "storage_bucket": "arthurvanremoortel-werkstuk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7331871091:android:0c60e4f061cfeadc8f2d06",
+        "android_client_info": {
+          "package_name": "com.example.arthurvanremoortel_werkstuk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7331871091-7qmiuvarf0ko9j06g7g7t0tpgii0lnkj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH2y1WB3awIp9HJr4LsIOCoN2Aiauwdiw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7331871091-7qmiuvarf0ko9j06g7g7t0tpgii0lnkj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
