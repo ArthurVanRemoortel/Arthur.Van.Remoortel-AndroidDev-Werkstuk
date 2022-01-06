@@ -1,13 +1,13 @@
-package com.example.arthurvanremoortel_werkstuk
+package com.example.arthurvanremoortel_werkstuk.ui.favorites
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.arthurvanremoortel_werkstuk.R
 import com.example.arthurvanremoortel_werkstuk.data.Recipe
 
 class RecipeListAdapter : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
@@ -25,8 +25,8 @@ class RecipeListAdapter : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder
         private val recipeItemView: TextView = itemView.findViewById(R.id.recipeTitleTextView)
 //        private val ratingView: RatingBar = itemView.findViewById(R.id.rating)
 
-        fun bind(text: String?, value: Int?) {
-            recipeItemView.text = text + value.toString()
+        fun bind(title: String?, rating: Int?) {
+            recipeItemView.text = title
         }
 
         companion object {
@@ -44,7 +44,7 @@ class RecipeListAdapter : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder
         }
 
         override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.recipeId == newItem.recipeId
         }
     }
 }

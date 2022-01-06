@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Recipe::class], version = 1, exportSchema = false)
+@Database(entities = [Recipe::class, Ingredient::class], version = 1, exportSchema = false)
 // Source: https://developer.android.com/codelabs/android-room-with-a-view-kotlin
 public abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
@@ -40,9 +40,9 @@ public abstract class AppDatabase : RoomDatabase() {
                 Log.d("DATABASE", "Populate.")
 
                 // Add sample recipes.
-                val recipe = Recipe(null,"Pizza Margherita", 8)
+                val recipe = Recipe(null,"Pizza Margherita", 8, false, 20)
                 recipeDao.insert(recipe)
-                val recipe2 = Recipe(null,"Pizza Hawaii", 3)
+                val recipe2 = Recipe(null,"Pizza Hawaii", 3, false, 50)
                 recipeDao.insert(recipe2)
             }
         }

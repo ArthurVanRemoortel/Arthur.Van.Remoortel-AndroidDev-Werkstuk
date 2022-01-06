@@ -12,9 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.arthurvanremoortel_werkstuk.R
 import com.example.arthurvanremoortel_werkstuk.RecipeApplication
-import com.example.arthurvanremoortel_werkstuk.RecipeListAdapter
 import com.example.arthurvanremoortel_werkstuk.data.Recipe
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModel
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModelFactory
@@ -63,7 +61,7 @@ class FavoritesFragment : Fragment() {
 
         if (requestCode == newRecipeActivityRequestCode && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(NewRecipeActivity.EXTRA_REPLY)?.let {
-                val recipe = Recipe(null,"test", 3*2)
+                val recipe = Recipe(null,"test", 3*2, false, 10)
                 recipeViewModel.insert(recipe)
             }
         } else {
