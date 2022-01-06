@@ -12,4 +12,8 @@
     <string name="favorites">Favorites</string>
     <string name="explore">Explore</string>
     <string name="profile">Profile</string>
+    <string name="add_recipe">Add Recipe</string>
+    <string name="save">Save</string>
+    <string name="public_recipe">Public</string>
+    <string name="recipe_title">Recipe Title</string>
 </resources>
