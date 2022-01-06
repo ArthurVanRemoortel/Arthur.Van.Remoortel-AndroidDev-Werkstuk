@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.example.arthurvanremoortel_werkstuk.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -69,6 +70,7 @@ class RegisterActivity : AppCompatActivity() {
             binding.passwordConfirmInput.setError("Passwords are not the same")
             return
         }
+        binding.activityProgressBar.visibility = View.VISIBLE
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
@@ -85,6 +87,7 @@ class RegisterActivity : AppCompatActivity() {
                     ).show()
                     // TODO: Show reason for fail.
                 }
+                binding.activityProgressBar.visibility = View.INVISIBLE
             }
     }
 }

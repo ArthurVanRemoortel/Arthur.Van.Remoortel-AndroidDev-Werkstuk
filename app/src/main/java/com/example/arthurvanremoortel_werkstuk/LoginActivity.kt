@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.example.arthurvanremoortel_werkstuk.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -33,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener {
             this.handleLogin()
+
         }
 
         binding.registerText.setOnClickListener {
@@ -53,13 +55,15 @@ class LoginActivity : AppCompatActivity() {
             binding.passwordInput.setError("Password is required.")
             return
         }
+        binding.activityProgressBar.visibility = View.VISIBLE
 
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("LOGIN", "signInWithEmail:success")
-                    val user = auth.currentUser
+                    //val user = auth.currentUser
+
                     startActivity(Intent(this, MainActivity::class.java))
 
                 } else {
@@ -68,7 +72,10 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
                     // TODO: Show reason for fail.
+                    //binding.activityProgressBar.visibility = View.INVISIBLE
+
                 }
+                binding.activityProgressBar.visibility = View.INVISIBLE
             }
     }
 
