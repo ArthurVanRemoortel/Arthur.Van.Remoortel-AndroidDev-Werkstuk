@@ -14,4 +14,5 @@ class RecipeApplication : Application() {
     // rather than when the application starts
     val database by lazy { AppDatabase.getDatabase(this, applicationScope) }
     val repository by lazy { ApplicationRepository(database.recipeDao()) }
+
 }
