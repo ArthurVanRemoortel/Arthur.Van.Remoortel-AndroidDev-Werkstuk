@@ -1,12 +1,15 @@
 <resources>
-    <string name="app_name">FoodApp</string>
-    <string name="hello_world2">Hello World2!</string>
+    <string name="app_name">Recipe App</string>
     <string name="register">Register</string>
-    <string name="reister_already_have_an_account">Already have an account? Login here.</string>
+    <string name="register_already_have_an_account">Already have an account? Login here.</string>
     <string name="email">Email</string>
     <string name="username">Username</string>
     <string name="login">Login</string>
     <string name="no_account_register_here">No account? Register here.</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="title_activity_main_bar">MainActivityBar</string>
+    <string name="favorites">Favorites</string>
+    <string name="explore">Explore</string>
+    <string name="profile">Profile</string>
 </resources>

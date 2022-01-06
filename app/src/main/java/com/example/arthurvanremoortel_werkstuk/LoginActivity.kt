@@ -23,6 +23,10 @@ class LoginActivity : AppCompatActivity() {
         if(currentUser != null){
 
         }
+        // TODO: Auto-login for dev purposes only.
+        binding.emailInput.setText("a@a.com")
+        binding.passwordInput.setText("arthur123")
+        handleLogin()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("LOGIN", "signInWithEmail:success")
                     //val user = auth.currentUser
 
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, MainActivityBar::class.java))
 
                 } else {
                     // If sign in fails, display a message to the user.
