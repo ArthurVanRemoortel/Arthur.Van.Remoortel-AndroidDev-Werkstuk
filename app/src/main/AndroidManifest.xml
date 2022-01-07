@@ -11,13 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ArthurVanRemoortelWerkstuk">
         <activity
+            android:name=".ui.RecipeDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivityBar"
             android:exported="false"
             android:label="@string/title_activity_main_bar" />
         <activity
             android:name=".ui.favorites.NewRecipeActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -27,7 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".RegisterActivity"
             android:exported="false">
