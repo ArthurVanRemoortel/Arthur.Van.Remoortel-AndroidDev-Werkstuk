@@ -42,6 +42,7 @@ android {
 dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
     String roomVersion = "2.4.0"
 
     // Room components
