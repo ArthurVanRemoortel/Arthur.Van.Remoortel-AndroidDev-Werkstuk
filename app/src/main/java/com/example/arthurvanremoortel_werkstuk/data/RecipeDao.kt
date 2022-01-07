@@ -19,4 +19,8 @@ interface RecipeDao {
 
     @Query("DELETE FROM recipe")
     suspend fun deleteAll()
+
+    @Update
+    suspend fun updateRecipes(vararg recipes: Recipe)
+
 }

@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arthurvanremoortel_werkstuk.R
 import com.example.arthurvanremoortel_werkstuk.data.Recipe
+import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
+import com.google.android.material.card.MaterialCardView
 
 
-class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
+class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapter<RecipeWithEverything, RecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_recipe, parent, false)
@@ -30,11 +32,11 @@ class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapte
         private val durationTextView: TextView = itemView.findViewById(R.id.durationTextView)
 //        private val ratingView: RatingBar = itemView.findViewById(R.id.rating)
 
-        fun bind(recipe: Recipe, clickListener: OnItemClickListener) {
-            recipeTitleView.text = recipe.title
-            durationTextView.text = recipe.preparation_duration_minutes.toString()
+        fun bind(recipe: RecipeWithEverything, clickListener: OnItemClickListener) {
+            recipeTitleView.text = recipe.recipe.title
+            durationTextView.text = recipe.recipe.preparation_duration_minutes.toString()
             recipeImageView.setImageResource(R.drawable.pizza)
-            recipeImageView.setOnClickListener {
+            itemView.setOnClickListener {
                 clickListener.onItemClicked(recipe)
             }
         }
@@ -48,17 +50,17 @@ class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapte
         }
     }
 
-    class RecipesComparator : DiffUtil.ItemCallback<Recipe>() {
-        override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
+    class RecipesComparator : DiffUtil.ItemCallback<RecipeWithEverything>() {
+        override fun areItemsTheSame(oldItem: RecipeWithEverything, newItem: RecipeWithEverything): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
-            return oldItem.recipeId == newItem.recipeId
+        override fun areContentsTheSame(oldItem: RecipeWithEverything, newItem: RecipeWithEverything): Boolean {
+            return oldItem.recipe.recipeId == newItem.recipe.recipeId
         }
     }
 }
 
 interface OnItemClickListener{
-    fun onItemClicked(recipe: Recipe)
+    fun onItemClicked(recipe: RecipeWithEverything)
 }

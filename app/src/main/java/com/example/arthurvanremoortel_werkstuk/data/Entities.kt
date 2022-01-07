@@ -1,49 +1,89 @@
 package com.example.arthurvanremoortel_werkstuk.data
 
 import android.graphics.Bitmap
+import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.*
 import androidx.room.Embedded
+import com.google.firebase.database.Exclude
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 import java.time.Duration
 
 @Entity
 @Parcelize
 data class Recipe (
     @PrimaryKey(autoGenerate = true) val recipeId: Long?,
-    val title: String,
-    val rating: Int,
-    val is_public: Boolean,
-    val preparation_duration_minutes: Int
-) : Parcelable
+    var title: String,
+    var rating: Int,
+    var preparation_duration_minutes: Int,
+    var firebaseId: String?,
+    var creatorEmail: String?,
+) : Parcelable {
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "title" to title ,
+            "rating" to rating,
+            "firebaseId" to firebaseId,
+            "preparation_duration_minutes" to preparation_duration_minutes,
+        )
+    }
+}
 
-@Entity data class Ingredient(
+@Parcelize @Entity data class Ingredient(
     @PrimaryKey(autoGenerate = true) val ingredientId: Long?,
     val parentRecipeId: Long,
-    val name: String,
-    val amount: String,
-)
+    var name: String,
+    var amount: String,
+)  : Parcelable{
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "ingredientId" to null,
+            "name" to name,
+            "amount" to amount,
+        )
+    }
+}
 
-@Entity data class PreparationStep(
+@Parcelize @Entity data class PreparationStep(
     @PrimaryKey(autoGenerate = true) val prepStepId: Long?,
     val parentRecipeId: Long,
-    val description: String,
-    val duration_minutes: Int?,
-)
+    var description: String,
+    var duration_minutes: Int?,
+) : Parcelable{
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "prepStepId" to null,
+            "name" to description,
+            "amount" to duration_minutes,
+        )
+    }
+}
 
-data class RecipeWithEverything(
+@Parcelize data class RecipeWithEverything(
     @Embedded val recipe: Recipe,
     @Relation(
         parentColumn = "recipeId",
         entityColumn = "parentRecipeId"
     )
-    val ingredients: List<Ingredient>,
+    var ingredients : List<Ingredient>,
 
     @Relation(
         parentColumn = "recipeId",
         entityColumn = "parentRecipeId"
     )
-    val preparationSteps: List<PreparationStep>
-)
+    var preparationSteps: List<PreparationStep>
+
+): Parcelable {
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "recipe" to recipe.toMap() ,
+            "ingredients" to ingredients.map { it.toMap() } ,
+            "preparationSteps" to preparationSteps.map { it.toMap() },
+        )
+    }
+
+}
 
 

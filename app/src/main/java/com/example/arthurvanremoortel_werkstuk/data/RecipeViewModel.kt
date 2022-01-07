@@ -5,11 +5,17 @@ import kotlinx.coroutines.launch
 
 class RecipeViewModel(private val repository: ApplicationRepository) : ViewModel() {
 
-    val allRecipes: LiveData<List<Recipe>> = repository.allRecipes.asLiveData()
+    val allRecipes: LiveData<List<RecipeWithEverything>> = repository.allRecipes.asLiveData()
 
     fun insert(recipe: Recipe) = viewModelScope.launch {
         repository.insert(recipe)
     }
+
+    fun update(recipe: Recipe) = viewModelScope.launch {
+        repository.update(recipe)
+    }
+
+
 }
 
 class RecipeViewModelFactory(private val repository: ApplicationRepository) : ViewModelProvider.Factory {

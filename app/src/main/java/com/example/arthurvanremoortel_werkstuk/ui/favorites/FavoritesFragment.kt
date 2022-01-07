@@ -20,8 +20,12 @@ import com.example.arthurvanremoortel_werkstuk.RecipeApplication
 import com.example.arthurvanremoortel_werkstuk.data.Recipe
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModel
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModelFactory
+import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
 import com.example.arthurvanremoortel_werkstuk.databinding.FragmentFavoritesBinding
 import com.example.arthurvanremoortel_werkstuk.ui.RecipeDetailsActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class FavoritesFragment : Fragment(), OnItemClickListener {
 
@@ -32,6 +36,7 @@ class FavoritesFragment : Fragment(), OnItemClickListener {
 
     private lateinit var favoritesViewModel: FavoritesViewModel
     private var _binding: FragmentFavoritesBinding? = null
+    private lateinit var auth: FirebaseAuth
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -40,6 +45,8 @@ class FavoritesFragment : Fragment(), OnItemClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         favoritesViewModel =  ViewModelProvider(this).get(FavoritesViewModel::class.java)
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        auth = Firebase.auth
 
         val fab = binding.fab
         fab.setOnClickListener {
@@ -55,8 +62,6 @@ class FavoritesFragment : Fragment(), OnItemClickListener {
             // Update the cached copy of the words in the adapter.
             recipes?.let { adapter.submitList(it) }
         })
-
-        val root: View = binding.root
         return root
     }
 
@@ -65,7 +70,7 @@ class FavoritesFragment : Fragment(), OnItemClickListener {
 
         if (requestCode == newRecipeActivityRequestCode && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(NewRecipeActivity.EXTRA_REPLY)?.let {
-                val recipe = Recipe(null,"test", 3*2, false, 10)
+                val recipe = Recipe(null,"test", 3*2, 20, null, auth.currentUser?.email) // TODO: Fail if user is null
                 recipeViewModel.insert(recipe)
             }
         } else {
@@ -81,8 +86,8 @@ class FavoritesFragment : Fragment(), OnItemClickListener {
         _binding = null
     }
 
-    override fun onItemClicked(recipe: Recipe) {
-        Log.d("RECIPE SELECTED", recipe.title)
+    override fun onItemClicked(recipe: RecipeWithEverything) {
+        Log.d("RECIPE SELECTED", recipe.recipe.title)
         val intent = Intent(this.context, RecipeDetailsActivity::class.java)
         intent.putExtra("Recipe", recipe)
         startActivity(intent)

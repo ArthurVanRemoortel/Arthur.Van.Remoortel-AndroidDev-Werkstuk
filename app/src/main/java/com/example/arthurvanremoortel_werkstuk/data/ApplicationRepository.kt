@@ -11,7 +11,7 @@ class ApplicationRepository(private val recipeDao: RecipeDao) {
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    val allRecipes: Flow<List<Recipe>> = recipeDao.getAlphabetizedRecipes()
+    val allRecipes: Flow<List<RecipeWithEverything>> = recipeDao.getRecipesWithEverything()
 
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work
@@ -20,5 +20,10 @@ class ApplicationRepository(private val recipeDao: RecipeDao) {
     @WorkerThread
     suspend fun insert(recipe: Recipe) {
         recipeDao.insert(recipe)
+    }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun update(recipe: Recipe) {
+        recipeDao.updateRecipes(recipe)
     }
 }

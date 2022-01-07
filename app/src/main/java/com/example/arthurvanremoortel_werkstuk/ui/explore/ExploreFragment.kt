@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.arthurvanremoortel_werkstuk.databinding.FragmentExploreBinding
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class ExploreFragment : Fragment() {
 
@@ -19,13 +21,8 @@ class ExploreFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        dashboardViewModel =
-            ViewModelProvider(this).get(ExploreViewModel::class.java)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        dashboardViewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
 
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -36,6 +33,7 @@ class ExploreFragment : Fragment() {
         })
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

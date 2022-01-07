@@ -7,10 +7,13 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.example.arthurvanremoortel_werkstuk.data.AppDatabase
 import com.example.arthurvanremoortel_werkstuk.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -66,7 +69,10 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("LOGIN", "signInWithEmail:success")
-                    //val user = auth.currentUser
+                    val user = auth.currentUser
+                    lifecycleScope.launch {
+                        AppDatabase.populateDatabase((application as RecipeApplication).database, user!!)
+                    }
 
                     startActivity(Intent(this, MainActivityBar::class.java))
 
