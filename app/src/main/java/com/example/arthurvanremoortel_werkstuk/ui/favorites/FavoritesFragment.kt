@@ -11,14 +11,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.arthurvanremoortel_werkstuk.MainActivityBar
+import com.example.arthurvanremoortel_werkstuk.R
 import com.example.arthurvanremoortel_werkstuk.RecipeApplication
 import com.example.arthurvanremoortel_werkstuk.data.Recipe
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModel
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModelFactory
 import com.example.arthurvanremoortel_werkstuk.databinding.FragmentFavoritesBinding
+import com.example.arthurvanremoortel_werkstuk.ui.RecipeDetailsActivity
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment(), OnItemClickListener {
 
     private val newRecipeActivityRequestCode = 1
     private val recipeViewModel: RecipeViewModel by viewModels {
@@ -42,13 +47,12 @@ class FavoritesFragment : Fragment() {
             startActivityForResult(intent, newRecipeActivityRequestCode)
         }
         val recyclerView = binding.recyclerView
-        val adapter = RecipeListAdapter()
+        val adapter = RecipeListAdapter(this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         recipeViewModel.allRecipes.observe(viewLifecycleOwner, { recipes ->
             // Update the cached copy of the words in the adapter.
-            Log.d("test", recipes.toString())
             recipes?.let { adapter.submitList(it) }
         })
 
@@ -75,5 +79,16 @@ class FavoritesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClicked(recipe: Recipe) {
+        Log.d("RECIPE SELECTED", recipe.title)
+        val intent = Intent(this.context, RecipeDetailsActivity::class.java)
+        intent.putExtra("Recipe", recipe)
+        startActivity(intent)
+
+//        this.findNavController().navigate(R.id.recipe_details_fragment)
+
+
     }
 }
