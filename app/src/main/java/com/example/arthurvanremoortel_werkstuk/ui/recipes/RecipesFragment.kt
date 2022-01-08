@@ -64,7 +64,7 @@ class RecipesFragment : Fragment(), OnItemClickListener {
 
         if (requestCode == newRecipeActivityRequestCode && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(NewRecipeActivity.EXTRA_REPLY)?.let {
-                val recipe = Recipe(null,"test", 3*2, 20, null, auth.currentUser?.email) // TODO: Fail if user is null
+                val recipe = Recipe(null,"test", 3.0, 20, null, auth.currentUser?.email) // TODO: Fail if user is null
                 recipeViewModel.insert(recipe)
             }
         } else {

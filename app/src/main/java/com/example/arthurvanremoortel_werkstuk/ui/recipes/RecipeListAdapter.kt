@@ -33,7 +33,7 @@ class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapte
         fun bind(recipe: RecipeWithEverything, clickListener: OnItemClickListener) {
             recipeTitleView.text = recipe.recipe.title
             durationTextView.text = recipe.recipe.preparation_duration_minutes.toString()
-            recipeImageView.setImageResource(R.drawable.pizza)
+            recipeImageView.setImageResource(R.drawable.default_image)
             itemView.setOnClickListener {
                 clickListener.onItemClicked(recipe)
             }

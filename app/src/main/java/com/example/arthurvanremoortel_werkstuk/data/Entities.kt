@@ -11,10 +11,10 @@ import java.util.HashMap
 
 @Entity
 @Parcelize
-data class Recipe (
+data class Recipe(
     @PrimaryKey(autoGenerate = true) val recipeId: Long?,
     var title: String,
-    var rating: Int,
+    var rating: Double,
     var preparation_duration_minutes: Int,
     var firebaseId: String?,
     var creatorEmail: String?,
@@ -49,7 +49,7 @@ data class Recipe (
             return Recipe(
                 recipeId = null,
                 title = data.get("title").toString(),
-                rating = (data.get("rating") as Long).toInt(),
+                rating = data.get("rating").toString().toDouble(),
                 preparation_duration_minutes = (data.get("preparation_duration_minutes") as Long).toInt(),
                 firebaseId = data.get("firebaseId").toString(),
                 creatorEmail = data.get("creatorEmail").toString(),

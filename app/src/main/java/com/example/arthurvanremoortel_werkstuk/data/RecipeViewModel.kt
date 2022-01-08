@@ -9,10 +9,9 @@ import java.util.HashMap
 
 
 class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
+    // TODO: Move some functions scattered around the project to this class.
 
     val allRecipes: LiveData<List<RecipeWithEverything>> = repository.allRecipes.asLiveData()
-
-//    val allFirebaseRecipes: List<RecipeWithEverything> = getFirebaseRecipes()//.asLiveData()
 
     fun insert(recipe: Recipe) = viewModelScope.launch {
         repository.insert(recipe)
@@ -25,7 +24,6 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
         repository.delete(recipe)
     }
 
-    // TODO: Move some functions scattered around the project to this class.
 
     fun getFirebaseRecipes(callback: (f: List<RecipeWithEverything>) -> Unit): List<RecipeWithEverything>{
         val database = Firebase.database

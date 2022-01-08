@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
+import java.io.File
 
 @Database(entities = [Recipe::class, Ingredient::class, PreparationStep::class], version = 2, exportSchema = false)
 // Source: https://developer.android.com/codelabs/android-room-with-a-view-kotlin
@@ -44,8 +45,7 @@ public abstract class AppDatabase : RoomDatabase() {
             ingredientDao.deleteAll()
             preparationStepDao.deleteAll()
 
-            // Add sample recipes.
-            val recipe1 = Recipe(1,"Pizza Margherita", 8, 20, null, user.email)
+            val recipe1 = Recipe(1,"Pizza Margherita", 8.0, 20, null, user.email)
             recipeDao.insert(recipe1)
             var rid: Long = recipe1.recipeId!!
             val ingredients1 = listOf<Ingredient>(
@@ -83,7 +83,7 @@ public abstract class AppDatabase : RoomDatabase() {
                 ingredientDao.insert(ingredient)
             }
 
-            val recipe2 = Recipe(2,"Pizza Hawaii", 3, 20, null, user.email)
+            val recipe2 = Recipe(2,"Pizza Hawaii", 3.0, 20, null, user.email)
             rid = recipe2.recipeId!!
             for (prepStep in preparationSteps) {
                 preparationStepDao.insert(PreparationStep(null, rid, prepStep.description, prepStep.duration_minutes))
