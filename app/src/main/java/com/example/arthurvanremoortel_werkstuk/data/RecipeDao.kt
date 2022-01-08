@@ -15,10 +15,13 @@ interface RecipeDao {
 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(dish: Recipe)
+    suspend fun insert(dish: Recipe): Long
 
     @Query("DELETE FROM recipe")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM recipe WHERE recipeId = :recipeId")
+    suspend fun deleteByUserId(recipeId: Long)
 
     @Update
     suspend fun updateRecipes(vararg recipes: Recipe)

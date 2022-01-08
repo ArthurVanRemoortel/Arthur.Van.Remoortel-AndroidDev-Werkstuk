@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arthurvanremoortel_werkstuk.RecipeApplication
 import com.example.arthurvanremoortel_werkstuk.data.Recipe
@@ -27,7 +26,7 @@ class RecipesFragment : Fragment(), OnItemClickListener {
 
     private val newRecipeActivityRequestCode = 1
     private val recipeViewModel: RecipeViewModel by viewModels {
-        RecipeViewModelFactory((activity?.application as RecipeApplication).repository)
+        RecipeViewModelFactory((activity?.application as RecipeApplication).recipeRepository)
     }
 //    private lateinit var recipesViewModel: RecipesViewModel
     private var _binding: FragmentRecipesBinding? = null

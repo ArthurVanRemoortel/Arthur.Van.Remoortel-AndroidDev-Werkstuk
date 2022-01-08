@@ -18,14 +18,19 @@ import com.example.arthurvanremoortel_werkstuk.databinding.FragmentExploreBindin
 import com.example.arthurvanremoortel_werkstuk.ui.RecipeDetailsActivity
 import com.example.arthurvanremoortel_werkstuk.ui.recipes.OnItemClickListener
 import com.example.arthurvanremoortel_werkstuk.ui.recipes.RecipeListAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 class ExploreFragment : Fragment(), OnItemClickListener {
 
     private lateinit var dashboardViewModel: ExploreViewModel
     private var _binding: FragmentExploreBinding? = null
+    private lateinit var auth: FirebaseAuth
+
     private val recipeViewModel: RecipeViewModel by viewModels {
-        RecipeViewModelFactory((activity?.application as RecipeApplication).repository)
+        RecipeViewModelFactory((activity?.application as RecipeApplication).recipeRepository)
     }
 
     // This property is only valid between onCreateView and
@@ -34,7 +39,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 //        dashboardViewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
-
+        auth = Firebase.auth
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -49,14 +54,22 @@ class ExploreFragment : Fragment(), OnItemClickListener {
         val adapter = RecipeListAdapter(this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
+        reloadFirebaseRecipes()
+        return root
+    }
 
-        recyclerView.onFlingListener
-
+    fun reloadFirebaseRecipes(){
         lifecycleScope.launch {
-            val succesCallback: (l: List<RecipeWithEverything>) -> Unit = { adapter.submitList(it) }
+            val succesCallback: (l: List<RecipeWithEverything>) -> Unit = { showFirebaseRecipes(it) }
             recipeViewModel.getFirebaseRecipes(callback = succesCallback)
         }
-        return root
+    }
+
+    fun showFirebaseRecipes(recipesList: List<RecipeWithEverything>): Unit{
+        val recyclerView = binding.recyclerView
+        val adepter = recyclerView.adapter as RecipeListAdapter
+        // TODO: Add filters here.
+        adepter.submitList(recipesList)
     }
 
 

@@ -3,7 +3,9 @@ package com.example.arthurvanremoortel_werkstuk.data
 import android.os.Parcelable
 import androidx.room.*
 import androidx.room.Embedded
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.Exclude
+import com.google.firebase.ktx.Firebase
 import kotlinx.parcelize.Parcelize
 import java.util.HashMap
 
@@ -27,6 +29,21 @@ data class Recipe (
             "creatorEmail" to creatorEmail,
         )
     }
+    fun isRecipeByUser(user: FirebaseUser): Boolean{
+        return creatorEmail == user.email
+    }
+
+    fun isRemoteRecipeAndNotCurrentUser(user: FirebaseUser) : Boolean{
+        return firebaseId != null && !isRecipeByUser(user)
+    }
+
+    fun isRecipeOnFirebase() : Boolean{
+        return firebaseId != null
+    }
+    fun isRecipeSavedLocally() : Boolean{
+        return recipeId != null
+    }
+
     companion object {
         fun fromFirebaseJson(data: HashMap<String, Any>): Recipe {
             return Recipe(
@@ -43,7 +60,7 @@ data class Recipe (
 
 @Parcelize @Entity data class Ingredient(
     @PrimaryKey(autoGenerate = true) val ingredientId: Long?,
-    val parentRecipeId: Long?,
+    var parentRecipeId: Long?,
     var name: String,
     var amount: String,
 )  : Parcelable{
@@ -70,7 +87,7 @@ data class Recipe (
 
 @Parcelize @Entity data class PreparationStep(
     @PrimaryKey(autoGenerate = true) val prepStepId: Long?,
-    val parentRecipeId: Long?,
+    var parentRecipeId: Long?,
     var description: String,
     var duration_minutes: Int?,
 ) : Parcelable{
@@ -94,7 +111,7 @@ data class Recipe (
     }
 }
 
-@Parcelize data class RecipeWithEverything(
+@Parcelize data class RecipeWithEverything (
     @Embedded val recipe: Recipe,
     @Relation(
         parentColumn = "recipeId",
@@ -106,7 +123,7 @@ data class Recipe (
         parentColumn = "recipeId",
         entityColumn = "parentRecipeId"
     )
-    var preparationSteps: List<PreparationStep>
+    var preparationSteps: List<PreparationStep>,
 
 ): Parcelable {
     fun toMap(): Map<String, Any?> {
@@ -125,7 +142,7 @@ data class Recipe (
             return RecipeWithEverything(
                 recipe = Recipe.fromFirebaseJson(recipeData),
                 ingredients = ingredientsData.map { Ingredient.fromFirebaseJson(it) },
-                preparationSteps = prepStepsData.map { PreparationStep.fromFirebaseJson(it) }
+                preparationSteps = prepStepsData.map { PreparationStep.fromFirebaseJson(it) },
             )
         }
     }
