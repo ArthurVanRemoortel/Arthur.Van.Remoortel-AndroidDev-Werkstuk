@@ -1,4 +1,4 @@
-package com.example.arthurvanremoortel_werkstuk.ui.recipes
+package com.example.arthurvanremoortel_werkstuk.ui.explore
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +12,10 @@ import com.example.arthurvanremoortel_werkstuk.R
 import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
 
 
-class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapter<RecipeWithEverything, RecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
+class FirebaseRecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapter<RecipeWithEverything, FirebaseRecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_recipe, parent, false)
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.firebase_recyclerview_recipe, parent, false)
         return RecipeViewHolder(view)
     }
 
@@ -41,7 +41,7 @@ class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapte
         companion object {
             fun create(parent: ViewGroup): RecipeViewHolder {
                 val view: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.recyclerview_recipe, parent, false)
+                    .inflate(R.layout.firebase_recyclerview_recipe, parent, false)
                 return RecipeViewHolder(view)
             }
         }

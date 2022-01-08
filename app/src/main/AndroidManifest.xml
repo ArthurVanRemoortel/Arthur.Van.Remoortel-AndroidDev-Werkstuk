@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.arthurvanremoortel_werkstuk">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-<!--    <uses-permission android:name="android.permission.CAMERA"/>-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".RecipeApplication"
@@ -14,7 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ArthurVanRemoortelWerkstuk">
         <activity
-            android:name=".ui.RecipeDetailsActivity"
+            android:name=".ui.explore.FirebaseRecipeDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity_recipe_details_firebase"
+            android:exported="false" />
+        <activity
+            android:name=".ui.recipes.RecipeDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivityBar"
@@ -34,8 +39,7 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>

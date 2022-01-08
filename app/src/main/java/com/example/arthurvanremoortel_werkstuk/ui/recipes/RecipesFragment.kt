@@ -17,30 +17,26 @@ import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModel
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModelFactory
 import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
 import com.example.arthurvanremoortel_werkstuk.databinding.FragmentRecipesBinding
-import com.example.arthurvanremoortel_werkstuk.ui.RecipeDetailsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class RecipesFragment : Fragment(), OnItemClickListener {
-
+    private var _binding: FragmentRecipesBinding? = null
+    private lateinit var auth: FirebaseAuth
     private val newRecipeActivityRequestCode = 1
     private val recipeViewModel: RecipeViewModel by viewModels {
         RecipeViewModelFactory((activity?.application as RecipeApplication).recipeRepository)
     }
-//    private lateinit var recipesViewModel: RecipesViewModel
-    private var _binding: FragmentRecipesBinding? = null
-    private lateinit var auth: FirebaseAuth
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        recipesViewModel =  ViewModelProvider(this).get(RecipesViewModel::class.java)
+        auth = Firebase.auth
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        auth = Firebase.auth
 
         val fab = binding.fab
         fab.setOnClickListener {
@@ -81,7 +77,6 @@ class RecipesFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClicked(recipe: RecipeWithEverything) {
-        Log.d("RECIPE SELECTED", recipe.recipe.title)
         val intent = Intent(this.context, RecipeDetailsActivity::class.java)
         intent.putExtra("Recipe", recipe)
         startActivity(intent)

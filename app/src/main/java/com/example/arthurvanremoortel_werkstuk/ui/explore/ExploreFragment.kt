@@ -15,20 +15,14 @@ import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModel
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModelFactory
 import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
 import com.example.arthurvanremoortel_werkstuk.databinding.FragmentExploreBinding
-import com.example.arthurvanremoortel_werkstuk.ui.RecipeDetailsActivity
-import com.example.arthurvanremoortel_werkstuk.ui.recipes.OnItemClickListener
-import com.example.arthurvanremoortel_werkstuk.ui.recipes.RecipeListAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 class ExploreFragment : Fragment(), OnItemClickListener {
-
-    private lateinit var dashboardViewModel: ExploreViewModel
     private var _binding: FragmentExploreBinding? = null
     private lateinit var auth: FirebaseAuth
-
     private val recipeViewModel: RecipeViewModel by viewModels {
         RecipeViewModelFactory((activity?.application as RecipeApplication).recipeRepository)
     }
@@ -38,20 +32,12 @@ class ExploreFragment : Fragment(), OnItemClickListener {
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        dashboardViewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
         auth = Firebase.auth
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textDashboard
-//        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
-        val fab = binding.fab
-        fab.visibility = View.INVISIBLE
-
         val recyclerView = binding.recyclerView
-        val adapter = RecipeListAdapter(this)
+        val adapter = FirebaseRecipeListAdapter(this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
         reloadFirebaseRecipes()
@@ -67,7 +53,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     fun showFirebaseRecipes(recipesList: List<RecipeWithEverything>): Unit{
         val recyclerView = binding.recyclerView
-        val adepter = recyclerView.adapter as RecipeListAdapter
+        val adepter = recyclerView.adapter as FirebaseRecipeListAdapter
         // TODO: Add filters here.
         adepter.submitList(recipesList)
     }
@@ -80,8 +66,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
 
     override fun onItemClicked(recipe: RecipeWithEverything) {
-        Log.d("RECIPE SELECTED", recipe.recipe.title)
-        val intent = Intent(this.context, RecipeDetailsActivity::class.java)
+        val intent = Intent(this.context, FirebaseRecipeDetailsActivity::class.java)
         intent.putExtra("Recipe", recipe)
         startActivity(intent)
     }
