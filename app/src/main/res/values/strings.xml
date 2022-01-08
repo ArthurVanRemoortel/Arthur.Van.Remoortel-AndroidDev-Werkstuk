@@ -10,6 +10,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="title_activity_main_bar">MainActivityBar</string>
     <string name="favorites">Favorites</string>
+    <string name="recipes">Recipes</string>
     <string name="explore">Explore</string>
     <string name="profile">Profile</string>
     <string name="add_recipe">Add Recipe</string>

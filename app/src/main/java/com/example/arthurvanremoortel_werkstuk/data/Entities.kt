@@ -1,14 +1,11 @@
 package com.example.arthurvanremoortel_werkstuk.data
 
-import android.graphics.Bitmap
-import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.*
 import androidx.room.Embedded
 import com.google.firebase.database.Exclude
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
-import java.time.Duration
+import java.util.HashMap
 
 @Entity
 @Parcelize
@@ -25,15 +22,28 @@ data class Recipe (
         return mapOf(
             "title" to title ,
             "rating" to rating,
-            "firebaseId" to firebaseId,
             "preparation_duration_minutes" to preparation_duration_minutes,
+            "firebaseId" to firebaseId,
+            "creatorEmail" to creatorEmail,
         )
+    }
+    companion object {
+        fun fromFirebaseJson(data: HashMap<String, Any>): Recipe {
+            return Recipe(
+                recipeId = null,
+                title = data.get("title").toString(),
+                rating = (data.get("rating") as Long).toInt(),
+                preparation_duration_minutes = (data.get("preparation_duration_minutes") as Long).toInt(),
+                firebaseId = data.get("firebaseId").toString(),
+                creatorEmail = data.get("creatorEmail").toString(),
+            )
+        }
     }
 }
 
 @Parcelize @Entity data class Ingredient(
     @PrimaryKey(autoGenerate = true) val ingredientId: Long?,
-    val parentRecipeId: Long,
+    val parentRecipeId: Long?,
     var name: String,
     var amount: String,
 )  : Parcelable{
@@ -44,20 +54,43 @@ data class Recipe (
             "amount" to amount,
         )
     }
+
+    companion object {
+        fun fromFirebaseJson(data: HashMap<String, Any>): Ingredient {
+            return Ingredient(
+                ingredientId = null,
+                parentRecipeId = null,
+                name = data.get("name").toString(),
+                amount = data.get("amount").toString()
+            )
+        }
+    }
+
 }
 
 @Parcelize @Entity data class PreparationStep(
     @PrimaryKey(autoGenerate = true) val prepStepId: Long?,
-    val parentRecipeId: Long,
+    val parentRecipeId: Long?,
     var description: String,
     var duration_minutes: Int?,
 ) : Parcelable{
     fun toMap(): Map<String, Any?> {
         return mapOf(
             "prepStepId" to null,
-            "name" to description,
-            "amount" to duration_minutes,
+            "description" to description,
+            "duration_minutes" to duration_minutes,
         )
+    }
+
+    companion object {
+        fun fromFirebaseJson(data: HashMap<String, Any>): PreparationStep {
+            return PreparationStep(
+                prepStepId = null,
+                parentRecipeId = null,
+                description = data.get("description").toString(),
+                duration_minutes = (data.get("duration_minutes") as Long?)?.toInt()
+            )
+        }
     }
 }
 
@@ -84,6 +117,18 @@ data class Recipe (
         )
     }
 
+    companion object {
+        fun fromFirebaseJson(data: HashMap<String, Any>): RecipeWithEverything {
+            val recipeData = data.get("recipe") as HashMap<String, Any>
+            val ingredientsData = data.get("ingredients") as ArrayList<HashMap<String, Any>>
+            val prepStepsData = data.get("preparationSteps") as ArrayList<HashMap<String, Any>>
+            return RecipeWithEverything(
+                recipe = Recipe.fromFirebaseJson(recipeData),
+                ingredients = ingredientsData.map { Ingredient.fromFirebaseJson(it) },
+                preparationSteps = prepStepsData.map { PreparationStep.fromFirebaseJson(it) }
+            )
+        }
+    }
 }
 
 

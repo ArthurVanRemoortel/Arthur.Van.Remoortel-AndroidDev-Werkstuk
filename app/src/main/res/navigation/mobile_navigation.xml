@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_favorites">
+    app:startDestination="@+id/navigation_recipes">
 
     <fragment
-        android:id="@+id/navigation_favorites"
-        android:name="com.example.arthurvanremoortel_werkstuk.ui.favorites.FavoritesFragment"
+        android:id="@+id/navigation_recipes"
+        android:name="com.example.arthurvanremoortel_werkstuk.ui.recipes.RecipesFragment"
         android:label="@string/favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_recipes" />
 
     <fragment
         android:id="@+id/navigation_explore"

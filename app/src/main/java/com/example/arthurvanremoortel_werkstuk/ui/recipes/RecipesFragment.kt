@@ -1,4 +1,4 @@
-package com.example.arthurvanremoortel_werkstuk.ui.favorites
+package com.example.arthurvanremoortel_werkstuk.ui.recipes
 
 import android.app.Activity
 import android.content.Intent
@@ -11,31 +11,26 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.arthurvanremoortel_werkstuk.MainActivityBar
-import com.example.arthurvanremoortel_werkstuk.R
 import com.example.arthurvanremoortel_werkstuk.RecipeApplication
 import com.example.arthurvanremoortel_werkstuk.data.Recipe
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModel
 import com.example.arthurvanremoortel_werkstuk.data.RecipeViewModelFactory
 import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
-import com.example.arthurvanremoortel_werkstuk.databinding.FragmentFavoritesBinding
+import com.example.arthurvanremoortel_werkstuk.databinding.FragmentRecipesBinding
 import com.example.arthurvanremoortel_werkstuk.ui.RecipeDetailsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class FavoritesFragment : Fragment(), OnItemClickListener {
+class RecipesFragment : Fragment(), OnItemClickListener {
 
     private val newRecipeActivityRequestCode = 1
     private val recipeViewModel: RecipeViewModel by viewModels {
         RecipeViewModelFactory((activity?.application as RecipeApplication).repository)
     }
-
-    private lateinit var favoritesViewModel: FavoritesViewModel
-    private var _binding: FragmentFavoritesBinding? = null
+//    private lateinit var recipesViewModel: RecipesViewModel
+    private var _binding: FragmentRecipesBinding? = null
     private lateinit var auth: FirebaseAuth
 
     // This property is only valid between onCreateView and
@@ -43,8 +38,8 @@ class FavoritesFragment : Fragment(), OnItemClickListener {
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        favoritesViewModel =  ViewModelProvider(this).get(FavoritesViewModel::class.java)
-        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+//        recipesViewModel =  ViewModelProvider(this).get(RecipesViewModel::class.java)
+        _binding = FragmentRecipesBinding.inflate(inflater, container, false)
         val root: View = binding.root
         auth = Firebase.auth
 

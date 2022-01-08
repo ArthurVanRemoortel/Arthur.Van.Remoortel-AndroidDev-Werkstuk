@@ -18,7 +18,7 @@
             android:exported="false"
             android:label="@string/title_activity_main_bar" />
         <activity
-            android:name=".ui.favorites.NewRecipeActivity"
+            android:name=".ui.recipes.NewRecipeActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

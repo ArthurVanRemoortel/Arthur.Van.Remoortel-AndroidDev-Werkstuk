@@ -1,4 +1,4 @@
-package com.example.arthurvanremoortel_werkstuk.ui.favorites
+package com.example.arthurvanremoortel_werkstuk.ui.recipes
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arthurvanremoortel_werkstuk.R
-import com.example.arthurvanremoortel_werkstuk.data.Recipe
 import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
-import com.google.android.material.card.MaterialCardView
 
 
 class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapter<RecipeWithEverything, RecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {

@@ -1,4 +1,4 @@
-package com.example.arthurvanremoortel_werkstuk.ui.favorites
+package com.example.arthurvanremoortel_werkstuk.ui.recipes
 
 import android.app.Activity
 import android.content.Intent

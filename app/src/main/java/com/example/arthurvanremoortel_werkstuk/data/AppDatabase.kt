@@ -1,15 +1,12 @@
 package com.example.arthurvanremoortel_werkstuk.data
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Database(entities = [Recipe::class, Ingredient::class, PreparationStep::class], version = 2, exportSchema = false)
 // Source: https://developer.android.com/codelabs/android-room-with-a-view-kotlin
