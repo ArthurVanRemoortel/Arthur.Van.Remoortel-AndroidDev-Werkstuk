@@ -149,6 +149,9 @@ class RecipeDetailsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Shares a recipe to firebase.
+     */
     private fun shareRecipe(){
         val database = Firebase.database
         val ref = database.reference.child("recipes").push()
@@ -168,6 +171,10 @@ class RecipeDetailsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Stops sharing of recipe.
+     * TODO: Image is not deleted from firebase yet.
+     */
     private fun stopShareRecipe(){
         val database = Firebase.database
         recipeWithEverything.recipe.firebaseId?.let {
@@ -183,6 +190,10 @@ class RecipeDetailsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Deletes a recipe.
+     * TODO: Image is not deleted yet.
+     */
     private fun removeSavedRecipe(){
         lifecycleScope.launch{
             recipeWithEverything.recipe.recipeId?.let {

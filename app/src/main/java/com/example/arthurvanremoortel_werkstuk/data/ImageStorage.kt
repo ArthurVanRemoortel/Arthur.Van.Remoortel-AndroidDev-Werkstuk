@@ -12,7 +12,8 @@ import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
 import java.io.*
 
-// Primary purpose is passing images between intents since images can be to large to to included with the intent.
+/** Primary purpose is passing images between intents since images can be to large to to included with the intent.
+ */
 object ImageCache {
     private var cachedImages: HashMap<String, Bitmap> = HashMap()
 
@@ -28,12 +29,12 @@ object ImageCache {
     fun deleteCachedImage(imageId: String) {
         cachedImages.remove(imageId)
     }
-
-
 }
 
+/** Used for various Image operations. */
 class ImageStorage(val context: Context) {
 
+    /** Generates a image path in internal storage. Does not check of the path exists. */
     fun getImagePath(fileName: String): String {
         val wrapper = ContextWrapper(context.applicationContext)
         var file = wrapper.getDir("images", Context.MODE_PRIVATE)
@@ -41,6 +42,7 @@ class ImageStorage(val context: Context) {
         return file.path
     }
 
+    /** Gets an image as a Bitmap from internal storage. */
     fun getImageFromInternalStorage(fileName: String): Bitmap {
         val path = getImagePath(fileName)
         val options = BitmapFactory.Options()
@@ -48,7 +50,9 @@ class ImageStorage(val context: Context) {
         return bitmap
     }
 
-    // Source: https://android--code.blogspot.com/2018/04/android-kotlin-save-image-to-internal.html
+    /** Saves a Bitmap to local storage.
+     *  Source: https://android--code.blogspot.com/2018/04/android-kotlin-save-image-to-internal.htm
+     */
     fun saveImageToInternalStorage(bitmap:Bitmap, fileName: String): Uri {
         val wrapper = ContextWrapper(context.applicationContext)
         var file = wrapper.getDir("images", Context.MODE_PRIVATE)
@@ -65,6 +69,7 @@ class ImageStorage(val context: Context) {
         return Uri.parse(file.absolutePath)
     }
 
+    /** Uploads a local image to firebase. */
     fun uploadToFirebase(imageName: String, uploadName: String){
         val firebaseImageRef = Firebase.storage.reference.child("images/${uploadName}.jpg")
         val img = ImageStorage(context).getImageFromInternalStorage(imageName)
@@ -74,11 +79,14 @@ class ImageStorage(val context: Context) {
         val data = baos.toByteArray()
         firebaseImageRef.putBytes(data)
     }
+    /** Gets a reference to a firebase image. Does not download the image. */
     fun getFirebaseImageReference(imageName: String): StorageReference {
         val firebaseImageRef = Firebase.storage.reference.child("images/${imageName}.jpg")
         return firebaseImageRef
     }
-
+    /** Tries to show a firebase image on an ImageView.
+     * Uses the Picasso dependency for setting and imageView from an URL using a backgroudn task.
+     */
     fun trySetImageViewFromFirebase(imageView: ImageView, imageName: String) {
         val fbref = getFirebaseImageReference(imageName)
         fbref.downloadUrl.addOnSuccessListener {

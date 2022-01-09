@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.arthurvanremoortel_werkstuk.databinding.FragmentProfileBinding
 
-
+/**
+ * Currently does nothing.
+ */
 class ProfileFragment : Fragment() {
 
     private lateinit var notificationsViewModel: ProfileViewModel

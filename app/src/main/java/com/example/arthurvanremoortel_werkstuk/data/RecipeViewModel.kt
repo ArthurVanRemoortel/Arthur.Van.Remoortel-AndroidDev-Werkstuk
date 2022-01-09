@@ -24,15 +24,15 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
         repository.delete(recipe)
     }
 
-
-    fun getFirebaseRecipes(callback: (f: List<RecipeWithEverything>) -> Unit): List<RecipeWithEverything>{
+    /** Gets a list of all recipes on firebase.
+     *  Calls the callback functions with the list of recipes when succeeded.
+     */
+    fun getFirebaseRecipes(callback: (f: List<RecipeWithEverything>) -> Unit){
         val database = Firebase.database
-        var recipes: MutableList<RecipeWithEverything> = mutableListOf()
 
         database.reference.child("recipes").get().addOnSuccessListener {
-            if (it.value == null) {
-
-            } else {
+            val recipes: MutableList<RecipeWithEverything> = mutableListOf()
+            if (it.value != null) {
                 val result: HashMap<String, HashMap<String, Any>>
                 result = it.getValue(Any().javaClass) as HashMap<String, HashMap<String, Any>>
                 result.forEach { (firebaseId, data) ->
@@ -45,7 +45,6 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }
-        return recipes.toList()
     }
 
 }

@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import java.io.File
 
 @Database(entities = [Recipe::class, Ingredient::class, PreparationStep::class], version = 2, exportSchema = false)
-// Source: https://developer.android.com/codelabs/android-room-with-a-view-kotlin
+/** Source: https://developer.android.com/codelabs/android-room-with-a-view-kotlin */
 public abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
     abstract fun ingredientDao(): IngredientDao
@@ -37,6 +37,9 @@ public abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * Room database seeded. Needs to be used after the user has signed in.
+         */
         suspend fun populateDatabase(database: AppDatabase, user: FirebaseUser, delete: Boolean) {
             // Delete all content here.
             val recipeDao = database.recipeDao()

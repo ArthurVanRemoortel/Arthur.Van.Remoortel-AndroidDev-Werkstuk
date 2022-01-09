@@ -44,6 +44,9 @@ class ExploreFragment : Fragment(), OnItemClickListener {
         return root
     }
 
+    /**
+     * Currently firebase recipes are only retrieved after onCreateView. Open the the Explore tab again to get new recipes.
+     */
     fun reloadFirebaseRecipes(){
         lifecycleScope.launch {
             val succesCallback: (l: List<RecipeWithEverything>) -> Unit = { showFirebaseRecipes(it) }

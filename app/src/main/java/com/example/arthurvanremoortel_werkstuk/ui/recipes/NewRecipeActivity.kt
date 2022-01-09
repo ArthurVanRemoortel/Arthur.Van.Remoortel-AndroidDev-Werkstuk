@@ -17,10 +17,12 @@ import com.example.arthurvanremoortel_werkstuk.data.ImageCache
 
 import java.util.*
 
-
+/**
+ * Save activity is used to create new recipes or edit existing ones.
+ */
 class NewRecipeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewRecipeBinding
-    private var existingRecipeWithEverything: RecipeWithEverything? = null
+    private var existingRecipeWithEverything: RecipeWithEverything? = null // Has a value when editing a recipe.
     private var photoBitmap: Bitmap? = null
     private val pickImageRequestCode = 1
     private val imageCaptureRequestCode = 2
@@ -39,6 +41,7 @@ class NewRecipeActivity : AppCompatActivity() {
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), pickImageRequestCode)
         }
+
         binding.takePhotoFab.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             try {
@@ -46,25 +49,25 @@ class NewRecipeActivity : AppCompatActivity() {
             } catch (e: ActivityNotFoundException) {
                 // display error state to the user
             }
-
         }
 
         binding.saveFab.setOnClickListener{
+            /**
+             * Tries to save the current form input. Can fail if minimum data is not provided.
+             */
             val replyIntent = Intent()
             if (TextUtils.isEmpty(binding.editTitleTextView.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
                 val title = binding.editTitleTextView.text.toString().trim()
                 val rating = binding.rating.rating.toDouble()
-                var duration = binding.editRecipeDurationText.text.toString().trim().toIntOrNull()
-                if (duration == null){
-                    duration = 0 //TODO: Temporary fix.
-                }
+                val duration = binding.editRecipeDurationText.text.toString().trim().toIntOrNull()
                 replyIntent.putExtra(SUCCESS_REPLY, true)
                 replyIntent.putExtra("title", title)
                 replyIntent.putExtra("rating", rating)
                 replyIntent.putExtra("duration", duration)
                 replyIntent.putExtra("currentRecipe", existingRecipeWithEverything)
+                // Images can be to large to put in intents. Use the global ImageCache instead.
                 if (photoBitmap != null){
                     val uuid = UUID.randomUUID().toString()
                     replyIntent.putExtra("cachedImageUUID", uuid)
@@ -78,7 +81,9 @@ class NewRecipeActivity : AppCompatActivity() {
         }
     }
 
-
+    /**
+     * Fill form with current value when editing an existing recipe.
+     */
     private fun fillDataFromCurrentRecipe(){
         existingRecipeWithEverything?.let {
             binding.editTitleTextView.setText(it.recipe.title)
@@ -92,10 +97,12 @@ class NewRecipeActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == imageCaptureRequestCode && resultCode == RESULT_OK) {
+            /** When returning from taking a photo. */
             photoBitmap = data!!.extras!!.get("data") as Bitmap // TODO: Are these !! ok?
             binding.editImageView.setImageBitmap(photoBitmap)
 
         } else if (requestCode == pickImageRequestCode && resultCode == RESULT_OK) {
+            /** When returning selecting an image from your saved images. */
             if (data == null) {
                 return
             } else {

@@ -38,7 +38,7 @@ class FirebaseRecipeDetailsActivity : AppCompatActivity() {
 
 
     private fun isRecipeByCurrentUser(): Boolean {
-        return recipeWithEverything.recipe.isRecipeByUser(auth.currentUser!!) // TODO: auth.currentUser should never be null be find better solution.
+        return recipeWithEverything.recipe.isRecipeByUser(auth.currentUser!!) // TODO: auth.currentUser should never be null but !! is not a good solution.
     }
 
 
@@ -94,15 +94,19 @@ class FirebaseRecipeDetailsActivity : AppCompatActivity() {
         updateSaveFab()
     }
 
+    /**
+     * The SaveFab can have multiple functions depending on the recipe state. All but one function are removed now, but might be useful again later.
+     */
     private fun updateSaveFab() {
         binding.saveFab.setImageResource(R.drawable.ic_baseline_save_alt_24)
     }
 
-
+    /**
+     * Called when the saveFab is pressed. Saved the recipe to room database and downloads the image if it exists.
+     */
     private fun saveRecipe(){
-        val recipe = recipeWithEverything.recipe
         lifecycleScope.launch{
-            val recipeId = recipeViewModel.repository.recipeDao.insert(recipe)
+            val recipeId = recipeViewModel.repository.recipeDao.insert(recipeWithEverything.recipe)
             recipeWithEverything.ingredients.forEach {
                 it.parentRecipeId = recipeId
                 ingredientViewModel.insert(it)
