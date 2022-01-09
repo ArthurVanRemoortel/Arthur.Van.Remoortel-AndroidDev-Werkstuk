@@ -30,7 +30,7 @@
             android:name=".ui.recipes.NewRecipeActivity"
             android:exported="false" />
         <activity
-            android:label="@string/login"
+            android:label="@string/app_name"
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>

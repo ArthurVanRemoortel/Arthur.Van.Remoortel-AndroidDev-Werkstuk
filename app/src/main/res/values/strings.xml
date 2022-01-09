@@ -20,7 +20,8 @@
     <string name="save">Save</string>
     <string name="public_recipe">Public</string>
     <string name="recipe_title">Recipe Title</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recipe_duration">Duration</string>
-    <string name="not_implemented_ingredients_steps">Creating steps and ingredients is not implemented. Dummy ingredients and steps will be generated.</string>
+    <string name="not_implemented_ingredients_steps" translatable="false">Creating steps and ingredients is not implemented. Dummy ingredients and steps will be generated.</string>
+    <string name="change_language_to_english">Change language to english.</string>
+    <string name="change_language_to_dutch">Change language to dutch.</string>
 </resources>

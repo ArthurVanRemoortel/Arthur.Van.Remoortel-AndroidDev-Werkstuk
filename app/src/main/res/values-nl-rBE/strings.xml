@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Recipe App</string>
+    <string name="register">Registreer</string>
+    <string name="details">Details</string>
+    <string name="new_recipe">Nieuw recept</string>
+    <string name="edit_recipe">Bewerk Recept</string>
+    <string name="register_already_have_an_account">Al een account? Login hier.</string>
+    <string name="email">Email</string>
+    <string name="username">Gebruikersnaam</string>
+    <string name="login">Login</string>
+    <string name="no_account_register_here">Geen account? Registreer hier.</string>
+    <string name="password">Passwoord</string>
+    <string name="confirm_password">Bevestig passwoord</string>
+    <string name="title_activity_main_bar">Recipe App</string>
+    <string name="favorites">Favorieten</string>
+    <string name="recipes">Recepten</string>
+    <string name="explore">Ontdek</string>
+    <string name="profile">Profiel</string>
+    <string name="add_recipe">Maak recept</string>
+    <string name="save">Opslaan</string>
+    <string name="public_recipe">Openbaar</string>
+    <string name="recipe_title">Recept Titel</string>
+    <string name="recipe_duration">Recept duur</string>
+    <string name="change_language_to_english">Verander taal naar engels.</string>
+    <string name="change_language_to_dutch">Verander taal naar nederlands.</string>
+</resources>
