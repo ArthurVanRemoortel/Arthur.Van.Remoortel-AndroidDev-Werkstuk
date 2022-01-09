@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.arthurvanremoortel_werkstuk.R
 import com.example.arthurvanremoortel_werkstuk.RecipeApplication
 import com.example.arthurvanremoortel_werkstuk.data.*
 import com.example.arthurvanremoortel_werkstuk.databinding.FragmentRecipesBinding
@@ -108,7 +109,7 @@ class RecipesFragment : Fragment(), OnItemClickListener {
         if (failed){
             Toast.makeText(
                 this.activity?.applicationContext,
-                "Recipe not saved because form is incorrect.",
+                getString(R.string.recipe_save_failed_form),
                 Toast.LENGTH_LONG).show()
         }
     }

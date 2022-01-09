@@ -54,7 +54,7 @@ class FirebaseRecipeDetailsActivity : AppCompatActivity() {
 
     fun updateGui(){
         binding.recipeTitleText.text = recipeWithEverything.recipe.title
-        binding.recipeDurationText.text = recipeWithEverything.recipe.preparation_duration_minutes.toString()
+        binding.recipeDurationText.text = getString(R.string.number_minutes, recipeWithEverything.recipe.preparation_duration_minutes.toString())
         binding.rating.rating = recipeWithEverything.recipe.rating.toFloat()
         binding.authorTextView.text = recipeWithEverything.recipe.creatorEmail
 
@@ -120,7 +120,7 @@ class FirebaseRecipeDetailsActivity : AppCompatActivity() {
             }
             updateSaveFab()
             Toast.makeText(
-                baseContext, "Recipe saved.",
+                baseContext, R.string.recipe_saved,
                 Toast.LENGTH_SHORT
             ).show()
         }

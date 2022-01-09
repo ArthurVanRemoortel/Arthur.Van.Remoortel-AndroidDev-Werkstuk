@@ -57,7 +57,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
 
     fun updateGui(){
         binding.recipeTitleText.text = recipeWithEverything.recipe.title
-        binding.recipeDurationText.text = recipeWithEverything.recipe.preparation_duration_minutes.toString()
+        binding.recipeDurationText.text = getString(R.string.number_minutes, recipeWithEverything.recipe.preparation_duration_minutes.toString())
         binding.rating.rating = recipeWithEverything.recipe.rating.toFloat()
 
         if (recipeWithEverything.recipe.hasImage) {
@@ -135,7 +135,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
         } else {
             Toast.makeText(
                 this.applicationContext,
-                "Recipe not saved because form is incorrect.",
+                R.string.recipe_save_failed_form,
                 Toast.LENGTH_LONG).show()
         }
     }
@@ -161,7 +161,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
                 ImageStorage(applicationContext).uploadToFirebase(recipeWithEverything.recipe.recipeId!!.toString(), firebaseId)
             }
             Toast.makeText(
-                baseContext, "Recipe shared.",
+                baseContext, getText(R.string.recipe_shared),
                 Toast.LENGTH_SHORT
             ).show()
             updateSaveFab()
@@ -177,7 +177,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
                 updateSaveFab()
             }
             Toast.makeText(
-                baseContext, "Recipe is not longer shared.",
+                baseContext, getText(R.string.stop_recipe_share),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -193,7 +193,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
                     it
                 )
                 Toast.makeText(
-                    baseContext, "Recipe deleted.",
+                    baseContext, getText(R.string.recipe_deleted),
                     Toast.LENGTH_SHORT
                 ).show()
             }

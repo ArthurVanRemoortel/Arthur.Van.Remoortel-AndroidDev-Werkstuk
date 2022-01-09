@@ -24,4 +24,13 @@
     <string name="recipe_duration">Recept duur</string>
     <string name="change_language_to_english">Verander taal naar engels.</string>
     <string name="change_language_to_dutch">Verander taal naar nederlands.</string>
+    <string name="number_minutes">%1$s minuten</string>
+
+    <string name="auth_failed">Aanmelden mislukt</string>
+    <string name="recipe_saved">Recept opgeslagen</string>
+    <string name="recipe_save_failed_form">Formulier was niet correct</string>
+    <string name="recipe_shared">Recept gedeeld</string>
+    <string name="stop_recipe_share">Recept niet meer gedeeld</string>
+    <string name="recipe_deleted">Recept verwijdert</string>
+
 </resources>

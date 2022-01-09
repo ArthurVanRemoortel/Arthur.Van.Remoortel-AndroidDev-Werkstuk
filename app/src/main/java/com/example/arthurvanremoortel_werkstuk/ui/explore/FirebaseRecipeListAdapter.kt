@@ -35,9 +35,8 @@ class FirebaseRecipeListAdapter(val itemClickListener: OnItemClickListener, val 
 
         fun bind(recipe: RecipeWithEverything, clickListener: OnItemClickListener) {
             recipeTitleView.text = recipe.recipe.title
-            durationTextView.text = recipe.recipe.preparation_duration_minutes.toString()
+            durationTextView.text = context.getString(R.string.number_minutes, recipe.recipe.preparation_duration_minutes.toString())
             authorTextView.text = recipe.recipe.creatorEmail
-
             if (recipe.recipe.hasImage) {
                 ImageStorage(context).trySetImageViewFromFirebase(recipeImageView, recipe.recipe.firebaseId!!)
             } else {

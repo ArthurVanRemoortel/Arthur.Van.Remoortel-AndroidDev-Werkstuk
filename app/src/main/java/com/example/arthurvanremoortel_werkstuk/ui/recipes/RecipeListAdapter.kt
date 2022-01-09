@@ -1,11 +1,7 @@
 package com.example.arthurvanremoortel_werkstuk.ui.recipes
 
-import android.app.Activity
 import android.content.Context
-import android.content.ContextWrapper
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,16 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.arthurvanremoortel_werkstuk.R
 import com.example.arthurvanremoortel_werkstuk.data.ImageStorage
 import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
-import java.io.*
-import kotlin.coroutines.coroutineContext
-import java.io.FileNotFoundException
-
-import java.io.FileInputStream
-
-import java.io.File
-
-
-
 
 
 class RecipeListAdapter(val itemClickListener: OnItemClickListener, val context: Context) : ListAdapter<RecipeWithEverything, RecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
@@ -49,7 +35,7 @@ class RecipeListAdapter(val itemClickListener: OnItemClickListener, val context:
 
         fun bind(recipe: RecipeWithEverything, clickListener: OnItemClickListener) {
             recipeTitleView.text = recipe.recipe.title
-            durationTextView.text = recipe.recipe.preparation_duration_minutes.toString()
+            durationTextView.text = context.getString(R.string.number_minutes, recipe.recipe.preparation_duration_minutes.toString())
             authorTextView.text = recipe.recipe.creatorEmail
             if (recipe.recipe.hasImage) {
                 recipeImageView.setImageBitmap(ImageStorage(context).getImageFromInternalStorage(recipe.recipe.recipeId!!.toString()))

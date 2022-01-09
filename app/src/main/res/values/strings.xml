@@ -24,4 +24,12 @@
     <string name="not_implemented_ingredients_steps" translatable="false">Creating steps and ingredients is not implemented. Dummy ingredients and steps will be generated.</string>
     <string name="change_language_to_english">Change language to english.</string>
     <string name="change_language_to_dutch">Change language to dutch.</string>
+    <string name="number_minutes">%1$s minutes</string>
+
+    <string name="auth_failed">Authentication failed</string>
+    <string name="recipe_saved">Recipe Saved</string>
+    <string name="recipe_save_failed_form">Recipe not saved because form is incorrect.</string>
+    <string name="recipe_shared">"Recipe shared</string>
+    <string name="stop_recipe_share">Recipe is not longer shared</string>
+    <string name="recipe_deleted">Recipe deleted.</string>
 </resources>
