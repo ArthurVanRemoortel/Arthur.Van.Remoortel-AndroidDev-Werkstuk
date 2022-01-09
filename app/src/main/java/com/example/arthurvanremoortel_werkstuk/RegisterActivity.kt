@@ -40,7 +40,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.registerText.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 

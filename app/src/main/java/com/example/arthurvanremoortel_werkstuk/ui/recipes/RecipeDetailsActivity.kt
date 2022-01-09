@@ -160,7 +160,10 @@ class RecipeDetailsActivity : AppCompatActivity() {
             if (recipeWithEverything.recipe.hasImage){
                 ImageStorage(applicationContext).uploadToFirebase(recipeWithEverything.recipe.recipeId!!.toString(), firebaseId)
             }
-
+            Toast.makeText(
+                baseContext, "Recipe shared.",
+                Toast.LENGTH_SHORT
+            ).show()
             updateSaveFab()
         }
     }
@@ -173,6 +176,10 @@ class RecipeDetailsActivity : AppCompatActivity() {
                 recipeViewModel.update(recipeWithEverything.recipe)
                 updateSaveFab()
             }
+            Toast.makeText(
+                baseContext, "Recipe is not longer shared.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -182,11 +189,15 @@ class RecipeDetailsActivity : AppCompatActivity() {
                 if (isRecipeOnFirebase() && isRecipeByCurrentUser()){
                     stopShareRecipe()
                 }
-
                 recipeViewModel.repository.recipeDao.deleteByUserId(
                     it
                 )
+                Toast.makeText(
+                    baseContext, "Recipe deleted.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             updateSaveFab()
             finish()
         }

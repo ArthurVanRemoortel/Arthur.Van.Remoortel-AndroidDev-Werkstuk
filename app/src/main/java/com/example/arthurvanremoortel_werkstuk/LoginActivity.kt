@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if(currentUser != null){
-
+            auth.signOut()
         }
         // TODO: Auto-login for dev purposes only.
         binding.emailInput.setText("a@a.com")
@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("LOGIN", "signInWithEmail:success")
                     val user = auth.currentUser
                     lifecycleScope.launch {
-                        AppDatabase.populateDatabase((application as RecipeApplication).database, user!!)
+                        AppDatabase.populateDatabase((application as RecipeApplication).database, user!!, delete=false)
                     }
 
                     startActivity(Intent(this, MainActivityBar::class.java))

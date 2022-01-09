@@ -119,18 +119,10 @@ class FirebaseRecipeDetailsActivity : AppCompatActivity() {
                 )
             }
             updateSaveFab()
-        }
-    }
-
-    private fun removeSavedRecipe(){
-        lifecycleScope.launch{
-            recipeWithEverything.recipe.recipeId?.let {
-                recipeViewModel.repository.recipeDao.deleteByUserId(
-                    it
-                )
-            }
-            updateSaveFab()
-            finish()
+            Toast.makeText(
+                baseContext, "Recipe saved.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

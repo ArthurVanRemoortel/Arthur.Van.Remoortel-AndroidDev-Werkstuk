@@ -2,6 +2,7 @@ package com.example.arthurvanremoortel_werkstuk.data
 
 import android.content.Context
 import androidx.room.Database
+import androidx.room.Delete
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -36,14 +37,16 @@ public abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateDatabase(database: AppDatabase, user: FirebaseUser) {
+        suspend fun populateDatabase(database: AppDatabase, user: FirebaseUser, delete: Boolean) {
             // Delete all content here.
             val recipeDao = database.recipeDao()
             val ingredientDao = database.ingredientDao()
             val preparationStepDao = database.preparationStepDao()
-            recipeDao.deleteAll()
-            ingredientDao.deleteAll()
-            preparationStepDao.deleteAll()
+            if (delete){
+                recipeDao.deleteAll()
+                ingredientDao.deleteAll()
+                preparationStepDao.deleteAll()
+            }
 
             val recipe1 = Recipe(1,"Pizza Margherita", 8.0, 20, null, user.email, false)
             recipeDao.insert(recipe1)
