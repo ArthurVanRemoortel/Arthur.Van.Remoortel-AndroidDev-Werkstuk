@@ -14,3 +14,5 @@
 I am using Firebase Realtime Database to store publicly shared recipes and Firebase Storage to store images. Login and registration is also provided by Firebase Authentication. 
 
 
+## Supported versions
+App was developped and tested on API version 16 and 30. 
