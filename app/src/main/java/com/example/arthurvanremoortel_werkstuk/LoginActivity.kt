@@ -26,10 +26,10 @@ class LoginActivity : AppCompatActivity() {
         if(currentUser != null){
             auth.signOut()
         }
-        // TODO: Auto-login for dev purposes only.
-        binding.emailInput.setText("a@a.com")
-        binding.passwordInput.setText("arthur123")
-        handleLogin()
+//        // TODO: Auto-login for dev purposes only.
+//        binding.emailInput.setText("a@a.com")
+//        binding.passwordInput.setText("arthur123")
+//        handleLogin()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
