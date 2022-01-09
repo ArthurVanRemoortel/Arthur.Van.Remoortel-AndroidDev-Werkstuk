@@ -14,19 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ArthurVanRemoortelWerkstuk">
         <activity
+            android:label="@string/details"
             android:name=".ui.explore.FirebaseRecipeDetailsActivity"
             android:exported="false" />
         <activity
+            android:label="@string/details"
             android:name=".ui.recipes.RecipeDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivityBar"
             android:exported="false"
-            android:label="@string/title_activity_main_bar" />
+            android:label="@string/app_name" />
         <activity
+            android:label="@string/edit_recipe"
             android:name=".ui.recipes.NewRecipeActivity"
             android:exported="false" />
         <activity
+            android:label="@string/login"
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -36,6 +40,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:label="@string/register"
             android:name=".RegisterActivity"
             android:exported="false" />
     </application>

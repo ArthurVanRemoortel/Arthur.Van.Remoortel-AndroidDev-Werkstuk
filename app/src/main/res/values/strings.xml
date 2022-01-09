@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Recipe App</string>
     <string name="register">Register</string>
+    <string name="details">Details</string>
+    <string name="new_recipe">New recipe</string>
+    <string name="edit_recipe">Edit recipe</string>
     <string name="register_already_have_an_account">Already have an account? Login here.</string>
     <string name="email">Email</string>
     <string name="username">Username</string>
@@ -8,7 +11,7 @@
     <string name="no_account_register_here">No account? Register here.</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="title_activity_main_bar">MainActivityBar</string>
+    <string name="title_activity_main_bar">Recipe App</string>
     <string name="favorites">Favorites</string>
     <string name="recipes">Recipes</string>
     <string name="explore">Explore</string>
@@ -17,7 +20,6 @@
     <string name="save">Save</string>
     <string name="public_recipe">Public</string>
     <string name="recipe_title">Recipe Title</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recipe_duration">Duration</string>
     <string name="not_implemented_ingredients_steps">Creating steps and ingredients is not implemented. Dummy ingredients and steps will be generated.</string>
