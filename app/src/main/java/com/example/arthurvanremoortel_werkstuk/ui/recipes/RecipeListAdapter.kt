@@ -2,6 +2,7 @@ package com.example.arthurvanremoortel_werkstuk.ui.recipes
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,11 +33,15 @@ class RecipeListAdapter(val itemClickListener: OnItemClickListener, val context:
         private val recipeImageView: ImageView = itemView.findViewById(R.id.recipeImageView)
         private val durationTextView: TextView = itemView.findViewById(R.id.durationTextView)
         private val authorTextView: TextView = itemView.findViewById(R.id.authorTextView)
+        private val isSharedView: View = itemView.findViewById(R.id.isSharedView)
 
         fun bind(recipe: RecipeWithEverything, clickListener: OnItemClickListener) {
             recipeTitleView.text = recipe.recipe.title
             durationTextView.text = context.getString(R.string.number_minutes, recipe.recipe.preparation_duration_minutes.toString())
             authorTextView.text = recipe.recipe.creatorEmail
+            if (recipe.recipe.isRecipeOnFirebase()){
+                isSharedView.setBackgroundColor(Color.parseColor("#03DAC5"))
+            }
             if (recipe.recipe.hasImage) {
                 recipeImageView.setImageBitmap(ImageStorage(context).getImageFromInternalStorage(recipe.recipe.recipeId!!.toString()))
             } else {
