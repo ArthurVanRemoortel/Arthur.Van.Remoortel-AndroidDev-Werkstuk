@@ -1,5 +1,6 @@
 package com.example.arthurvanremoortel_werkstuk.ui.explore
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +10,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arthurvanremoortel_werkstuk.R
+import com.example.arthurvanremoortel_werkstuk.data.ImageStorage
 import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
 
 
-class FirebaseRecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapter<RecipeWithEverything, FirebaseRecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
+
+class FirebaseRecipeListAdapter(val itemClickListener: OnItemClickListener, val context: Context) : ListAdapter<RecipeWithEverything, FirebaseRecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.firebase_recyclerview_recipe, parent, false)
-        return RecipeViewHolder(view)
+        return RecipeViewHolder(view, context)
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
@@ -24,27 +27,34 @@ class FirebaseRecipeListAdapter(val itemClickListener: OnItemClickListener) : Li
         holder.bind(current, itemClickListener)
     }
 
-    class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class RecipeViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
         private val recipeTitleView: TextView = itemView.findViewById(R.id.titleTextView)
         private val recipeImageView: ImageView = itemView.findViewById(R.id.recipeImageView)
         private val durationTextView: TextView = itemView.findViewById(R.id.durationTextView)
+        private val authorTextView: TextView = itemView.findViewById(R.id.authorTextView)
 
         fun bind(recipe: RecipeWithEverything, clickListener: OnItemClickListener) {
             recipeTitleView.text = recipe.recipe.title
             durationTextView.text = recipe.recipe.preparation_duration_minutes.toString()
-            recipeImageView.setImageResource(R.drawable.default_image)
+            authorTextView.text = recipe.recipe.creatorEmail
+
+            if (recipe.recipe.hasImage) {
+                ImageStorage(context).trySetImageViewFromFirebase(recipeImageView, recipe.recipe.firebaseId!!)
+            } else {
+                recipeImageView.setImageResource(R.drawable.default_image)
+            }
             itemView.setOnClickListener {
                 clickListener.onItemClicked(recipe)
             }
         }
 
-        companion object {
-            fun create(parent: ViewGroup): RecipeViewHolder {
-                val view: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.firebase_recyclerview_recipe, parent, false)
-                return RecipeViewHolder(view)
-            }
-        }
+//        companion object {
+//            fun create(parent: ViewGroup): RecipeViewHolder {
+//                val view: View = LayoutInflater.from(parent.context)
+//                    .inflate(R.layout.firebase_recyclerview_recipe, parent, false)
+//                return RecipeViewHolder(view)
+//            }
+//        }
     }
 
     class RecipesComparator : DiffUtil.ItemCallback<RecipeWithEverything>() {

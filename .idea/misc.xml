@@ -4,12 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_firebase_login.xml" value="0.25" />
-        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_firebase_recipe_details.xml" value="0.42777777777777776" />
+        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_firebase_recipe_details.xml" value="0.1" />
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_login.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_main.xml" value="0.3416666666666667" />
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_main_bar.xml" value="0.2" />
-        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_new_recipe.xml" value="0.2870159453302961" />
-        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_recipe_details.xml" value="0.18" />
+        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_new_recipe.xml" value="0.1" />
+        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_recipe_details.xml" value="0.13302752293577982" />
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_recipe_details_firebase.xml" value="0.4393162393162393" />
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/firebase_recyclerview_recipe.xml" value="0.42934782608695654" />
@@ -22,8 +22,8 @@
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/fragment_recipe_detail.xml" value="0.2611111111111111" />
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/fragment_recipe_details.xml" value="0.2611111111111111" />
         <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/fragment_recipes.xml" value="0.2611111111111111" />
-        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/recyclerview_recipe.xml" value="0.25" />
-        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
+        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/layout/recyclerview_recipe.xml" value="0.33" />
+        <entry key="..\:/Users/Arthur/Desktop/Arthur.Van.Remoortel-AndroidDev Werkstuk/app/src/main/res/menu/bottom_nav_menu.xml" value="0.21481481481481482" />
       </map>
     </option>
   </component>

@@ -37,7 +37,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
         val root: View = binding.root
 
         val recyclerView = binding.recyclerView
-        val adapter = FirebaseRecipeListAdapter(this)
+        val adapter = FirebaseRecipeListAdapter(this, requireContext())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
         reloadFirebaseRecipes()

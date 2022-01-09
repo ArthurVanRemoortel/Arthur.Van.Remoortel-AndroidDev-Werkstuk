@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.lifecycleScope
 import com.example.arthurvanremoortel_werkstuk.R
 import com.example.arthurvanremoortel_werkstuk.RecipeApplication
@@ -54,6 +55,18 @@ class FirebaseRecipeDetailsActivity : AppCompatActivity() {
     fun updateGui(){
         binding.recipeTitleText.text = recipeWithEverything.recipe.title
         binding.recipeDurationText.text = recipeWithEverything.recipe.preparation_duration_minutes.toString()
+        binding.rating.rating = recipeWithEverything.recipe.rating.toFloat()
+        binding.authorTextView.text = recipeWithEverything.recipe.creatorEmail
+
+        if (recipeWithEverything.recipe.hasImage) {
+            if (recipeWithEverything.recipe.hasImage) {
+                ImageStorage(applicationContext).trySetImageViewFromFirebase(binding.recipeDetailsImage, recipeWithEverything.recipe.firebaseId!!)
+            } else {
+                binding.recipeDetailsImage.setImageResource(R.drawable.default_image)
+            }
+        } else {
+            binding.recipeDetailsImage.setImageResource(R.drawable.default_image)
+        }
 
         if (isRecipeByCurrentUser()) {
             binding.saveFab.visibility = View.INVISIBLE
@@ -66,21 +79,25 @@ class FirebaseRecipeDetailsActivity : AppCompatActivity() {
                 // TODO: Error cannot save your own recipe. Should not happen if I don't show the save button in this case.
             }
         }
+
+        var ingredientsString = "Ingredients: \n\n"
+        for (ingredient in recipeWithEverything.ingredients) {
+            ingredientsString += ingredient.amount + ": " + ingredient.name + "\n"
+        }
+        binding.recipeIngredientsView.text = ingredientsString
+
+        var stepsString = "Steps: \n\n"
+        for (step in recipeWithEverything.preparationSteps) {
+            stepsString += step.description + "\n\n"
+        }
+        binding.recipeStepsTextView.text = stepsString
+        updateSaveFab()
     }
 
     private fun updateSaveFab() {
         binding.saveFab.setImageResource(R.drawable.ic_baseline_save_alt_24)
     }
 
-    private fun shareRecipe(){
-        val database = Firebase.database
-        val ref = database.reference.child("recipes").push()
-        ref.setValue(recipeWithEverything.toMap()).addOnSuccessListener {
-            recipeWithEverything.recipe.firebaseId = ref.key
-            recipeViewModel.update(recipeWithEverything.recipe)
-            updateSaveFab()
-        }
-    }
 
     private fun saveRecipe(){
         val recipe = recipeWithEverything.recipe
@@ -93,6 +110,13 @@ class FirebaseRecipeDetailsActivity : AppCompatActivity() {
             recipeWithEverything.preparationSteps.forEach {
                 it.parentRecipeId = recipeId
                 preparationStepViewModel.insert(it)
+            }
+            if (recipeWithEverything.recipe.hasImage){
+                val imgStorage = ImageStorage(applicationContext)
+                imgStorage.saveImageToInternalStorage(
+                    binding.recipeDetailsImage.drawable.toBitmap(),
+                    recipeId.toString()
+                )
             }
             updateSaveFab()
         }

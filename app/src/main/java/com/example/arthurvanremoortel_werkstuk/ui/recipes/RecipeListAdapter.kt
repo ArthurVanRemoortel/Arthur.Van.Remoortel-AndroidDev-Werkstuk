@@ -1,5 +1,11 @@
 package com.example.arthurvanremoortel_werkstuk.ui.recipes
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +15,25 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arthurvanremoortel_werkstuk.R
+import com.example.arthurvanremoortel_werkstuk.data.ImageStorage
 import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
+import java.io.*
+import kotlin.coroutines.coroutineContext
+import java.io.FileNotFoundException
+
+import java.io.FileInputStream
+
+import java.io.File
 
 
-class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapter<RecipeWithEverything, RecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
+
+
+
+class RecipeListAdapter(val itemClickListener: OnItemClickListener, val context: Context) : ListAdapter<RecipeWithEverything, RecipeListAdapter.RecipeViewHolder>(RecipesComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_recipe, parent, false)
-        return RecipeViewHolder(view)
+        return RecipeViewHolder(view, context)
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
@@ -24,25 +41,23 @@ class RecipeListAdapter(val itemClickListener: OnItemClickListener) : ListAdapte
         holder.bind(current, itemClickListener)
     }
 
-    class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class RecipeViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
         private val recipeTitleView: TextView = itemView.findViewById(R.id.titleTextView)
         private val recipeImageView: ImageView = itemView.findViewById(R.id.recipeImageView)
         private val durationTextView: TextView = itemView.findViewById(R.id.durationTextView)
+        private val authorTextView: TextView = itemView.findViewById(R.id.authorTextView)
 
         fun bind(recipe: RecipeWithEverything, clickListener: OnItemClickListener) {
             recipeTitleView.text = recipe.recipe.title
             durationTextView.text = recipe.recipe.preparation_duration_minutes.toString()
-            recipeImageView.setImageResource(R.drawable.default_image)
+            authorTextView.text = recipe.recipe.creatorEmail
+            if (recipe.recipe.hasImage) {
+                recipeImageView.setImageBitmap(ImageStorage(context).getImageFromInternalStorage(recipe.recipe.recipeId!!.toString()))
+            } else {
+                recipeImageView.setImageResource(R.drawable.default_image)
+            }
             itemView.setOnClickListener {
                 clickListener.onItemClicked(recipe)
-            }
-        }
-
-        companion object {
-            fun create(parent: ViewGroup): RecipeViewHolder {
-                val view: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.recyclerview_recipe, parent, false)
-                return RecipeViewHolder(view)
             }
         }
     }

@@ -17,6 +17,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import android.graphics.Bitmap
+
 
 class RecipeDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecipeDetailsBinding
@@ -56,6 +58,27 @@ class RecipeDetailsActivity : AppCompatActivity() {
     fun updateGui(){
         binding.recipeTitleText.text = recipeWithEverything.recipe.title
         binding.recipeDurationText.text = recipeWithEverything.recipe.preparation_duration_minutes.toString()
+        binding.rating.rating = recipeWithEverything.recipe.rating.toFloat()
+
+        if (recipeWithEverything.recipe.hasImage) {
+            binding.recipeDetailsImage.setImageBitmap(ImageStorage(applicationContext).getImageFromInternalStorage(recipeWithEverything.recipe.recipeId!!.toString()))
+        } else {
+            binding.recipeDetailsImage.setImageResource(R.drawable.default_image)
+        }
+
+        binding.authorTextView.text = recipeWithEverything.recipe.creatorEmail
+
+        var ingredientsString = "Ingredients: \n\n"
+        for (ingredient in recipeWithEverything.ingredients) {
+            ingredientsString += ingredient.amount + ": " + ingredient.name + "\n"
+        }
+        binding.recipeIngredientsView.text = ingredientsString
+
+        var stepsString = "Steps: \n\n"
+        for (step in recipeWithEverything.preparationSteps) {
+            stepsString += step.description + "\n\n"
+        }
+        binding.recipeStepsTextView.text = stepsString
 
         binding.deleteFab.setOnClickListener {
             removeSavedRecipe()
@@ -76,7 +99,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
                 startActivityForResult(intent, editRecipeActivityRequestCode)
             }
         } else {
-            // Not by current user. saveFab, editFab need to be invisible.
+            // Not by current user. saveFab, editFab needs to be invisible.
             binding.saveFab.visibility = View.INVISIBLE
             binding.editFab.visibility = View.INVISIBLE
         }
@@ -91,10 +114,19 @@ class RecipeDetailsActivity : AppCompatActivity() {
             val rating = data?.getDoubleExtra("rating", 0.0)
             val duration = data?.getIntExtra( "duration", 0);
             val receivedRecipe = data?.getParcelableExtra<RecipeWithEverything>("currentRecipe")
+            val cachedImageUUID  = data?.getStringExtra("cachedImageUUID")
             if (receivedRecipe != null && title != null && rating != null && duration != null){
                 receivedRecipe.recipe.title = title
                 receivedRecipe.recipe.rating = rating
                 receivedRecipe.recipe.preparation_duration_minutes = duration
+                if (cachedImageUUID != null) {
+                    val image = ImageCache.getCachedImage(cachedImageUUID)
+                    image?.let {
+                        ImageStorage(applicationContext).saveImageToInternalStorage(it, receivedRecipe.recipe.recipeId!!.toString())
+                        receivedRecipe.recipe.hasImage = true
+                        ImageCache.deleteCachedImage(cachedImageUUID)
+                    }
+                }
                 recipeViewModel.update(receivedRecipe.recipe)
                 this.recipeWithEverything = receivedRecipe
                 updateGui()
@@ -107,28 +139,6 @@ class RecipeDetailsActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG).show()
         }
     }
-
-//    private fun handleFabClick(){
-//        if (!isRecipeOnFirebase()) {
-//            // Local private recipe not on firebase.
-//            shareRecipe()
-//        } else {
-//            // Exists on firebase.
-//            if (!isRecipeByCurrentUser()) {
-//                // Recipe is on firebase but not by current user.
-//                if (isRecipeSavedLocally()){
-//                    // Saved recipe by other user.
-//                    removeSavedRecipe()
-//                } else {
-//                    // Not saved recipe by other user.
-//                    saveRecipe()
-//                }
-//            } else {
-//                // Recipe is on firebase and is created nu current user.
-//                stopShareRecipe()
-//            }
-//        }
-//    }
 
     private fun updateSaveFab() {
         if (!isRecipeOnFirebase()) {
@@ -143,8 +153,14 @@ class RecipeDetailsActivity : AppCompatActivity() {
         val database = Firebase.database
         val ref = database.reference.child("recipes").push()
         ref.setValue(recipeWithEverything.toMap()).addOnSuccessListener {
-            recipeWithEverything.recipe.firebaseId = ref.key
+            val firebaseId = ref.key!!
+            recipeWithEverything.recipe.firebaseId = firebaseId
             recipeViewModel.update(recipeWithEverything.recipe)
+
+            if (recipeWithEverything.recipe.hasImage){
+                ImageStorage(applicationContext).uploadToFirebase(recipeWithEverything.recipe.recipeId!!.toString(), firebaseId)
+            }
+
             updateSaveFab()
         }
     }
@@ -176,20 +192,4 @@ class RecipeDetailsActivity : AppCompatActivity() {
         }
 
     }
-
-//    private fun saveRecipe(){
-//        val recipe = recipeWithEverything.recipe
-//        lifecycleScope.launch{
-//            val recipeId = recipeViewModel.repository.recipeDao.insert(recipe)
-//            recipeWithEverything.ingredients.forEach {
-//                it.parentRecipeId = recipeId
-//                ingredientViewModel.insert(it)
-//            }
-//            recipeWithEverything.preparationSteps.forEach {
-//                it.parentRecipeId = recipeId
-//                preparationStepViewModel.insert(it)
-//            }
-//            updateSaveFab()
-//        }
-//    }
 }

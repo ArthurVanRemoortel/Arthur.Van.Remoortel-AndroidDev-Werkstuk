@@ -81,9 +81,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Recipe Name"
-                android:hint="@string/recipe_title"/>
+                android:hint="@string/recipe_title"
+                android:inputType="text" />
 
-            <TextView
+            <EditText
                 android:id="@+id/editRecipeDurationText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -92,11 +93,14 @@
                 android:layout_marginEnd="8dp"
                 android:textColor="?attr/colorAccent"
                 android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editTitleTextView"
                 tools:text="Duration"
                 android:hint="@string/recipe_duration"
+                android:inputType="number"
                 />
 
             <RatingBar
@@ -114,7 +118,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/editRecipeDurationText" />
 
             <TextView
-                android:id="@+id/recipeDescription"
+                android:id="@+id/recipeIngredientsView"
                 style="?android:attr/textAppearanceMedium"
                 android:layout_width="342dp"
                 android:layout_height="508dp"
@@ -122,6 +126,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:minHeight="555dp"
+                android:text="@string/not_implemented_ingredients_steps"
                 android:textIsSelectable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.333"

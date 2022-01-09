@@ -36,8 +36,8 @@
                 android:text="@{task.title}"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/view"
-                app:layout_constraintTop_toTopOf="@+id/view"
+                app:layout_constraintStart_toEndOf="@+id/isSharedView"
+                app:layout_constraintTop_toTopOf="@+id/isSharedView"
                 tools:text="Title header" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -49,8 +49,19 @@
                 tools:text="120 minutes" />
 
 
+            <TextView
+                android:id="@+id/authorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/colorAccent"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/durationTextView"
+                app:layout_constraintTop_toBottomOf="@+id/durationTextView"
+                tools:text="Author" />
+
+
             <View
-                android:id="@+id/view"
+                android:id="@+id/isSharedView"
                 android:layout_width="9dp"
                 android:layout_height="67dp"
                 android:layout_marginStart="16dp"

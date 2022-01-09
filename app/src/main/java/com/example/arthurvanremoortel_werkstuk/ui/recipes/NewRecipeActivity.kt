@@ -1,6 +1,5 @@
 package com.example.arthurvanremoortel_werkstuk.ui.recipes
 
-import android.R.attr
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -10,27 +9,19 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.widget.EditText
-import android.widget.Toast
 import com.example.arthurvanremoortel_werkstuk.R
-import com.example.arthurvanremoortel_werkstuk.data.Recipe
 import com.example.arthurvanremoortel_werkstuk.data.RecipeWithEverything
 import com.example.arthurvanremoortel_werkstuk.databinding.ActivityNewRecipeBinding
-import android.R.attr.data
 
-import java.io.InputStream
-import android.R.attr.data
-import android.net.Uri
-import android.R.attr.data
+import com.example.arthurvanremoortel_werkstuk.data.ImageCache
 
-
-
+import java.util.*
 
 
 class NewRecipeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewRecipeBinding
-    private lateinit var editWordView: EditText
     private var existingRecipeWithEverything: RecipeWithEverything? = null
-    private var selectedImageBitmap: Bitmap? = null
+    private var photoBitmap: Bitmap? = null
     private val pickImageRequestCode = 1
     private val imageCaptureRequestCode = 2
 
@@ -38,7 +29,6 @@ class NewRecipeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNewRecipeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        editWordView = findViewById(R.id.editTitleTextView)
         existingRecipeWithEverything = intent.getParcelableExtra<RecipeWithEverything>("Recipe")//.e as RecipeWithEverything
 
         fillDataFromCurrentRecipe()
@@ -61,21 +51,28 @@ class NewRecipeActivity : AppCompatActivity() {
 
         binding.saveFab.setOnClickListener{
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(editWordView.text)) {
+            if (TextUtils.isEmpty(binding.editTitleTextView.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
                 val title = binding.editTitleTextView.text.toString().trim()
-                val rating = binding.rating.rating
+                val rating = binding.rating.rating.toDouble()
                 var duration = binding.editRecipeDurationText.text.toString().trim().toIntOrNull()
                 if (duration == null){
                     duration = 0 //TODO: Temporary fix.
                 }
+                replyIntent.putExtra(SUCCESS_REPLY, true)
                 replyIntent.putExtra("title", title)
                 replyIntent.putExtra("rating", rating)
                 replyIntent.putExtra("duration", duration)
-                replyIntent.putExtra("currentRecipe", existingRecipeWithEverything!!)
+                replyIntent.putExtra("currentRecipe", existingRecipeWithEverything)
+                if (photoBitmap != null){
+                    val uuid = UUID.randomUUID().toString()
+                    replyIntent.putExtra("cachedImageUUID", uuid)
+                    ImageCache.addCachedImage(uuid, photoBitmap!!)
+                } else {
+                    replyIntent.putExtra("cachedImageUUID", null as String?)
+                }
                 setResult(Activity.RESULT_OK, replyIntent)
-
             }
             finish()
         }
@@ -86,6 +83,7 @@ class NewRecipeActivity : AppCompatActivity() {
         existingRecipeWithEverything?.let {
             binding.editTitleTextView.setText(it.recipe.title)
             binding.rating.rating = it.recipe.rating.toFloat()
+            binding.editRecipeDurationText.setText(it.recipe.preparation_duration_minutes.toString())
 
         }
     }
@@ -94,21 +92,25 @@ class NewRecipeActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == imageCaptureRequestCode && resultCode == RESULT_OK) {
-            selectedImageBitmap = data!!.extras!!.get("data") as Bitmap // TODO: Are these !! ok?
-            binding.editImageView.setImageBitmap(selectedImageBitmap)
+            photoBitmap = data!!.extras!!.get("data") as Bitmap // TODO: Are these !! ok?
+            binding.editImageView.setImageBitmap(photoBitmap)
 
         } else if (requestCode == pickImageRequestCode && resultCode == RESULT_OK) {
             if (data == null) {
                 return
             } else {
-                selectedImageBitmap = MediaStore.Images.Media.getBitmap(contentResolver, data.data)
-                binding.editImageView.setImageBitmap(selectedImageBitmap)
+                val diskBitmap = MediaStore.Images.Media.getBitmap(contentResolver, data.data)
+//                val out = ByteArrayOutputStream()
+//                diskBitmap.compress(Bitmap.CompressFormat.JPEG, 1, out)
+//                val decoded = BitmapFactory.decodeStream(ByteArrayInputStream(out.toByteArray()))
+                photoBitmap = diskBitmap
+                binding.editImageView.setImageBitmap(diskBitmap)
             }
         }
     }
 
 
     companion object {
-        const val EXTRA_REPLY = "com.example.android.wordlistsql.REPLY"
+        const val SUCCESS_REPLY = "SUCCESS_REPLY"
     }
 }

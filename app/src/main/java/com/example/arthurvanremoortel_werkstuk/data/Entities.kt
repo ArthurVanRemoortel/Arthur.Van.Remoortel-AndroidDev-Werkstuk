@@ -7,17 +7,19 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.Exclude
 import com.google.firebase.ktx.Firebase
 import kotlinx.parcelize.Parcelize
+import java.net.URI
 import java.util.HashMap
 
 @Entity
 @Parcelize
 data class Recipe(
-    @PrimaryKey(autoGenerate = true) val recipeId: Long?,
+    @PrimaryKey(autoGenerate = true) var recipeId: Long?,
     var title: String,
     var rating: Double,
     var preparation_duration_minutes: Int,
     var firebaseId: String?,
     var creatorEmail: String?,
+    var hasImage: Boolean,
 ) : Parcelable {
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -27,6 +29,7 @@ data class Recipe(
             "preparation_duration_minutes" to preparation_duration_minutes,
             "firebaseId" to firebaseId,
             "creatorEmail" to creatorEmail,
+            "hasImage" to hasImage,
         )
     }
     fun isRecipeByUser(user: FirebaseUser): Boolean{
@@ -53,6 +56,7 @@ data class Recipe(
                 preparation_duration_minutes = (data.get("preparation_duration_minutes") as Long).toInt(),
                 firebaseId = data.get("firebaseId").toString(),
                 creatorEmail = data.get("creatorEmail").toString(),
+                hasImage = data.get("hasImage") as Boolean
             )
         }
     }
