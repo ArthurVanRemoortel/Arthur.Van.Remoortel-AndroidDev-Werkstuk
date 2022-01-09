@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Handler
 import android.os.Looper
 import androidx.core.os.HandlerCompat
+import androidx.multidex.MultiDexApplication
 import com.example.arthurvanremoortel_werkstuk.data.AppDatabase
 import com.example.arthurvanremoortel_werkstuk.data.IngredientRepository
 import com.example.arthurvanremoortel_werkstuk.data.PreparationStepRepository
@@ -13,7 +14,7 @@ import kotlinx.coroutines.SupervisorJob
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class RecipeApplication : Application() {
+class RecipeApplication : MultiDexApplication() {
 
     val applicationScope = CoroutineScope(SupervisorJob())
 

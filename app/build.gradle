@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
-    id("kotlin-parcelize")
+    id"kotlin-parcelize"
 }
 apply plugin: 'kotlin-kapt'
 android {
@@ -40,12 +40,18 @@ android {
 }
 
 dependencies {
-
+    implementation 'com.android.support:multidex:1.0.3'
+    
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.3'
+    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.firebase:firebase-database:20.0.3'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
+
     String roomVersion = "2.4.0"
 
     // Room components
@@ -60,10 +66,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
-    implementation platform('com.google.firebase:firebase-bom:29.0.3')
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.google.firebase:firebase-database:19.2.1'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
+
 
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
